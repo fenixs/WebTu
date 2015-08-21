@@ -1,0 +1,42 @@
+﻿@model WebTu.Models.UserDetails
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+</head>
+<body>
+    <div> 
+
+        @Html.ValidationMessage("CredentialError", new { style = "color:red;" })
+
+        @using(Html.BeginForm("DoLogin","Authentication",FormMethod.Post))
+        {
+            @Html.LabelFor(model=>model.UserName)
+            @Html.TextBoxFor(c=>c.UserName)
+            @Html.ValidationMessageFor(x=>x.UserName)
+            <br />
+            @Html.LabelFor(c=>c.Password)
+            @Html.PasswordFor(x=>x.Password)
+            <br />
+            <input type="submit" name="btnSubmit" value="Login" />
+        }
+
+        
+
+        @*<form action="/Authentication/DoLogin" method="post">
+            UserName:<input id="UserName" name="UserName" type="text" value="@Model.UserName" /><br />
+            Password:<input id="Password" name="Password" type="password" value="@Model.Password"/><br />
+            <input type="submit" name="btnSubmit" value="Login" />
+        </form>*@
+    </div>
+</body>
+</html>

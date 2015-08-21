@@ -1,0 +1,71 @@
+﻿@model WebTu.ViewModels.CreateEmployeeViewModel
+@{
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+@section TitleSection{
+    CreateEmployee
+}
+
+@section HeaderSection{
+<script src="~/Scripts/Validations.js"></script>
+<script>
+    function resetForm() {
+        document.getElementById("txtFName").value = "";
+        document.getElementById("txtLName").value = "";
+        document.getElementById("txtSalary").value = "";
+    }
+</script>
+
+}
+
+@section ContentBody{
+    <div> 
+        <form action="/Employee/CancelSave" id="cancelForm" method="get" style="display:none">
+
+        </form>
+        <form action="/Employee/SaveEmployee" method="post">
+            
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" id="txtFName" name="FirstName" value="@Model.FirstName" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.ValidationMessage("FirstName")
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><input type="text" id="txtLName" name="LastName" value="@Model.LastName" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.ValidationMessage("LastName")
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Salary:</td>
+                    <td><input type="text" id="txtSalary" name="Salary" value="@Model.Salary" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.ValidationMessage("Salary")
+                    </td>
+                </tr>
+            </table>
+
+            
+            
+            
+            <input type="submit" name="btnSubmit" value="Save Employee" onclick="isValid();"/>
+            <input type="button" name="btnReset" value="reset" onclick="resetForm();" />
+            <input type="button" name="btnSubmit" value="Cancel" onclick="document.getElementById('cancelForm').submit();" />
+        </form>
+    </div>
+    }
+
