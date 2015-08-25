@@ -29,7 +29,7 @@ namespace WebTu.Areas.SPA.Controllers
         {
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
             EmployeeBusinessLayer ebl = new EmployeeBusinessLayer();
-            var employees = ebl.GetEmployees();
+            var employees = ebl.GetEmployees();            
             List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
             foreach (var item in employees)
             {

@@ -21,7 +21,7 @@ namespace WebTu.Filters
                     bvm.FooterData = new FooterViewModel()
                     {
                          CompanyName = "CompanyName",
-                         Year = DateTime.Now.ToString()
+                         Year = DateTime.Now.Year.ToString()
                     };
                 }
             }
