@@ -8,6 +8,7 @@ using WebTu.ViewModel.SPA;
 using OldViewModel = WebTu.ViewModels;
 
 using WebTu.Filters;
+using WebTu.Models;
 
 namespace WebTu.Areas.SPA.Controllers
 {
@@ -15,6 +16,7 @@ namespace WebTu.Areas.SPA.Controllers
     {
         //
         // GET: /SPA/Main/
+        [Authorize]
         public ActionResult Index()
         {
             MainViewModel v = new MainViewModel();
@@ -25,6 +27,7 @@ namespace WebTu.Areas.SPA.Controllers
             return View("Index",v);
         }
 
+        [Authorize]
         public ActionResult EmployeeList()
         {
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
@@ -62,6 +65,25 @@ namespace WebTu.Areas.SPA.Controllers
             
             CreateEmployeeViewModel v = new CreateEmployeeViewModel();
             return PartialView("CreateEmployee", v);
+        }
+
+        [AdminFilter]
+        public ActionResult SaveEmployee(Employee emp)
+        {
+            EmployeeBusinessLayer empbal = new EmployeeBusinessLayer();
+            empbal.SaveEmployee(emp);
+            EmployeeViewModel empViewModel = new EmployeeViewModel();
+            empViewModel.EmployeeName = emp.FirstName + " " + emp.LastName;
+            empViewModel.Salary = emp.Salary.ToString("c");
+            if(emp.Salary>15000)
+            {
+                empViewModel.SalaryColor = "yellow";
+            }
+            else
+            {
+                empViewModel.SalaryColor = "green";
+            }
+            return Json(empViewModel);
         }
 
 	}

@@ -1,4 +1,41 @@
 ﻿@model WebTu.ViewModel.SPA.CreateEmployeeViewModel
+<script src="~/Scripts/Validations.js"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("txtFName").value = "";
+        document.getElementById("txtLName").value = "";
+        document.getElementById("txtSalary").value = "";
+    }
+
+    function cancelSave() {
+        $('#divCreateEmployee').dialog('close');
+    }
+
+    function saveEmployee() {
+        if (isValid()) {
+            var e = {
+                FirstName: $('#txtFName').val(),
+                LastName: $('#txtLName').val(),
+                Salary: $('#txtSalary').val()
+            };
+            $.post("/SPA/Main/SaveEmployee", e).then(
+                function (r) {
+                    var newTr = $("<tr></tr>");
+                    var nameTD = $("<td></td>");
+                    var salaryTD = $("<td></td>");
+                    nameTD.text(r.EmployeeName);
+                    salaryTD.text(r.Salary);
+                    salaryTD.css("background-color", r.SalaryColor);
+                    newTr.append(nameTD);
+                    newTr.append(salaryTD);
+                    $('#EmployeeTable').append(newTr);
+                    $('#divCreateEmployee').dialog('close');
+                }
+                );
+        }
+    }
+</script>
 
 <div>
     <table>
@@ -7,7 +44,7 @@
                 First Name:
             </td>
             <td>
-                <input type="text" id="TxtFName" name="FirstName" value="@Model.FirstName" />
+                <input type="text" id="txtFName" name="FirstName" value="@Model.FirstName" />
             </td>
         </tr>
         <tr>
@@ -20,7 +57,7 @@
                 Last Name:
             </td>
             <td>
-                <input type="text" id="TxtLName" name="LastName" value="@Model.LastName" />
+                <input type="text" id="txtLName" name="LastName" value="@Model.LastName" />
             </td>
         </tr>
         <tr>
@@ -34,7 +71,7 @@
                 Salary:
             </td>
             <td>
-                <input type="text" id="TxtSalary" name="Salary" value="@Model.Salary" />
+                <input type="text" id="txtSalary" name="Salary" value="@Model.Salary" />
             </td>
         </tr>
         <tr>
@@ -46,9 +83,9 @@
         <tr>
             <td colspan="2">
 
-                <input type="submit" name="BtnSubmit" value="Save Employee" onclick="SaveEmployee();" />
-                <input type="submit" name="BtnSubmit" value="Cancel" onclick="CancelSave();" />
-                <input type="button" name="BtnReset" value="Reset" onclick="ResetForm();" />
+                <input type="submit" name="BtnSubmit" value="Save Employee" onclick="saveEmployee();" />
+                <input type="submit" name="BtnSubmit" value="Cancel" onclick="cancelSave();" />
+                <input type="button" name="BtnReset" value="Reset" onclick="resetForm();" />
             </td>
         </tr>
     </table>
